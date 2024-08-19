@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { Box, Stack, Typography, Button, Modal, TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material'
-import { firestore, storage } from '@/firebase'
+import { firestore, storage, firebaseConfig } from '@/firebase'
+// import dotenv from "dotenv"
+// dotenv.config()
 import {
   collection,
   doc,
@@ -30,6 +32,7 @@ const style = {
 }
 
 export default function Home() {
+  console.log(34567,firebaseConfig)
   const [inventory, setInventory] = useState([])
   const [open, setOpen] = useState(false)
   const [itemName, setItemName] = useState('')
@@ -124,7 +127,9 @@ export default function Home() {
 
   const updateInventory = async () => {
     const snapshot = query(collection(firestore, 'inventory'))
+    console.log(snapshot)
     const docs = await getDocs(snapshot)
+    console.log(docs)
     const inventoryList = []
     docs.forEach((doc) => {
       inventoryList.push({ name: doc.id, ...doc.data() })
